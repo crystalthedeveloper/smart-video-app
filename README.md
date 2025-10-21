@@ -20,7 +20,7 @@ In your Webflow project, open **Page Settings → Custom Code → Before </body>
 
 ```html
 <!-- Smart Video YouTube & Vimeo Lazy Loader [by Crystal The Developer Inc.] -->
-<script src="https://cdn.jsdelivr.net/gh/crystalthedeveloper/smart-video-app@v1.0.0/smart-video.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/crystalthedeveloper/smart-video-app@v1.0.1/smart-video.js" defer></script>
 ```
 
 ---
