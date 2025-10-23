@@ -20,7 +20,7 @@ In your Webflow project, open **Page Settings → Custom Code → Before </body>
 
 ```html
 <!-- Smart Video (CLTD) YouTube & Vimeo Lazy Loader -->
-<script src="https://cdn.jsdelivr.net/gh/crystalthedeveloper/smart-video-app@latest/smart-video.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/crystalthedeveloper/smart-video-app@v1.0.2/smart-video.js" defer></script>
 ```
 
 > Host the file yourself or pin to a specific tag once you’re ready for production.
