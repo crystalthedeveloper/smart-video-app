@@ -1,7 +1,8 @@
 {
   "cosmic": {
     "framework": {
-      "name": "astro"
+      "name": "astro",
+      "version": "5.16.6"
     }
   }
 }
