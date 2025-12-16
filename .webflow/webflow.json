@@ -5,5 +5,9 @@
   "cosmic": {
     "framework": "astro",
     "config": "./cloud.config.json"
+  },
+  "cloud": {
+    "framework": "astro",
+    "config": "./cloud.config.json"
   }
 }
