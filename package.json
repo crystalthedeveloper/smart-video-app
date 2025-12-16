@@ -5,5 +5,8 @@
   "description": "Smart Video Webflow Custom Code app deployment artifacts.",
   "scripts": {
     "build": "echo \"Smart Video uses Webflow Cloud custom config\""
+  },
+  "devDependencies": {
+    "astro": "^5.16.6"
   }
 }

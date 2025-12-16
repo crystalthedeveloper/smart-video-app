@@ -1,7 +1,5 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  output: "static",
-  publicDir: "public",
-  srcDir: "src"
+  output: "static"
 });

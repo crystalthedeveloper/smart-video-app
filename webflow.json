@@ -1,9 +1,7 @@
 {
   "name": "Smart Video App",
   "apiVersion": "2",
-  "publicDir": "public",
   "cosmic": {
-    "framework": "astro",
-    "config": "./cloud.config.json"
+    "framework": "astro"
   }
 }
