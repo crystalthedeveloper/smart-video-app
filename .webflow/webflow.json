@@ -2,6 +2,8 @@
   "name": "smart-video-app",
   "cloud": {
     "framework": "custom",
-    "config": "./cloud.config.json"
+    "config": "./cloud.config.json",
+    "mountPath": "/smart-video-app",
+    "project_id": "smart-video-app"
   }
 }
