@@ -3,6 +3,7 @@
   "cloud": {
     "framework": "custom",
     "config": "./cloud.config.json",
+    "publicDir": ".",
     "mountPath": "/smart-video-app",
     "project_id": "smart-video-app"
   }

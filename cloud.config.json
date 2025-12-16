@@ -1,15 +1,15 @@
 {
   "$schema": "https://cloud.webflow.com/schema/config/v1.json",
   "name": "smart-video-app",
-  "description": "Publishes smart-video.js plus the Smart Video lifecycle webhooks on Webflow Cloud.",
+  "description": "Publishes smart-video-app.js plus the Smart Video lifecycle webhooks on Webflow Cloud.",
   "build": {
     "command": "",
     "output": "."
   },
   "objects": [
     {
-      "path": "/smart-video.js",
-      "source": "./smart-video.js",
+      "path": "/smart-video-app/smart-video-app.js",
+      "source": "./smart-video-app.js",
       "contentType": "application/javascript; charset=utf-8",
       "cacheControl": {
         "public": true,

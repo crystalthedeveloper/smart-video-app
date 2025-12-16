@@ -3,9 +3,9 @@
 Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, lazy-loading YouTube + Vimeo script into every published site where the app is installed. Designers continue to build native Webflow CMS bindings and `.cltd-lazy-video` components exactly the way they are used to—no canvas injection, symbols, or custom attributes are touched.
 
 ## What ships in this repo
-- `smart-video.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
+- `smart-video-app.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
 - `manifest.json` – declares OAuth + lifecycle hooks so Webflow knows how to talk to the app.
-- `cloud.config.json` – Webflow Cloud deployment recipe that uploads `smart-video.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
+- `cloud.config.json` – Webflow Cloud deployment recipe that uploads `smart-video-app.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
 - `webflow.json` – declares a `custom` Cloud framework that points at `cloud.config.json`, sets the mount path to `/smart-video-app`, and stores the project slug (update `project_id` to match your Cloud project). A copy also lives under `.webflow/webflow.json` for hosts that expect that path.
 - `package.json` – lightweight manifest so Webflow Cloud's build step always finds a Node project even though no npm build is required.
 - `functions/` – Cloud functions that respond to install/uninstall events and call the Custom Code API.
@@ -13,7 +13,7 @@ Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, la
 ## Hosting on Webflow Cloud
 1. Authenticate the [Webflow Cloud CLI](https://developers.webflow.com/data/cloud) for the `smart-video-app` project.
 2. Deploy the static asset + functions: `webflow cloud deploy -c ./cloud.config.json`.
-   - The deploy publishes `smart-video.js` to `https://smart-video-app.webflow.io/smart-video.js` with long-term caching.
+   - The deploy publishes `smart-video-app.js` to `https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js` with long-term caching.
    - `/hooks/app-install`, `/hooks/app-uninstall`, `/hooks/site-install`, and `/hooks/site-uninstall` become HTTPS endpoints backed by the code in `functions/`.
 3. Verify the script URL loads in the browser and that each hook responds with JSON `{"ok": true}` when POSTed locally (Webflow will send signed requests in production).
 
@@ -23,7 +23,7 @@ Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, la
 3. Upload/update the manifest inside the Webflow App Dashboard. The OAuth block uses the Data client credentials you already provisioned (`clientId`/`redirectUri` shown in the screenshot) and requests the scopes required for the Custom Code API.
 
 ## Lifecycle automation
-- **`functions/site-install.js`** runs when a site owner installs the app. It extracts the site-scoped access token Webflow passes to lifecycle hooks, loads the site's current custom code, and appends `<script src="https://smart-video-app.webflow.io/smart-video.js" data-cltd-smart-video defer></script>` to the **Before </body>** section. That code only executes on published sites, so the Designer canvas stays untouched.
+- **`functions/site-install.js`** runs when a site owner installs the app. It extracts the site-scoped access token Webflow passes to lifecycle hooks, loads the site's current custom code, and appends `<script src="https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js" data-cltd-smart-video defer></script>` to the **Before </body>** section. That code only executes on published sites, so the Designer canvas stays untouched.
 - **`functions/site-uninstall.js`** removes the same snippet if the site disconnects the app.
 - The app-level hooks simply acknowledge install/uninstall events so Webflow can complete the process.
 
@@ -59,5 +59,5 @@ Once the app is installed on a site, designers continue to build exactly as befo
 - Guards against double-initialization via `window.__cltdSmartVideoInitialized`.
 
 ## Need to verify locally?
-- `smart-video.js` can still be referenced directly inside Webflow (or any HTML file) if you want to test outside of the Marketplace install flow.
+- `smart-video-app.js` can still be referenced directly inside Webflow (or any HTML file) if you want to test outside of the Marketplace install flow.
 - Use the lifecycle hooks with a tool like `curl` or `httpie` to simulate Webflow's payload and confirm the Custom Code API calls succeed before submitting the app for review.

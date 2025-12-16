@@ -1,5 +1,6 @@
 const API_BASE = "https://api.webflow.com/v2";
-export const SMART_VIDEO_SCRIPT_URL = "https://smart-video-app.webflow.io/smart-video.js";
+export const SMART_VIDEO_SCRIPT_URL =
+  "https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js";
 export const SMART_VIDEO_SNIPPET = `<script src="${SMART_VIDEO_SCRIPT_URL}" data-cltd-smart-video defer></script>`;
 const SMART_VIDEO_SNIPPET_REGEX = /<script[^>]*data-cltd-smart-video[^>]*><\\/script>\s*/gi;
 
