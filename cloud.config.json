@@ -1,0 +1,39 @@
+{
+  "$schema": "https://cloud.webflow.com/schema/config/v1.json",
+  "name": "smart-video-app",
+  "description": "Publishes smart-video.js plus the Smart Video lifecycle webhooks on Webflow Cloud.",
+  "build": {
+    "command": "",
+    "output": "."
+  },
+  "objects": [
+    {
+      "path": "/smart-video.js",
+      "source": "./smart-video.js",
+      "contentType": "application/javascript; charset=utf-8",
+      "cacheControl": {
+        "public": true,
+        "maxAge": 31536000,
+        "immutable": true
+      }
+    }
+  ],
+  "functions": [
+    {
+      "path": "/hooks/app-install",
+      "entry": "./functions/app-install.js"
+    },
+    {
+      "path": "/hooks/app-uninstall",
+      "entry": "./functions/app-uninstall.js"
+    },
+    {
+      "path": "/hooks/site-install",
+      "entry": "./functions/site-install.js"
+    },
+    {
+      "path": "/hooks/site-uninstall",
+      "entry": "./functions/site-uninstall.js"
+    }
+  ]
+}

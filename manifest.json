@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developers.webflow.com/schema/app-manifest.v1.json",
+  "name": "Smart Video (CLTD)",
+  "slug": "smart-video-app",
+  "version": "2.0.0",
+  "description": "Injects the Smart Video lazy-loading script into Webflow sites so .cltd-lazy-video blocks serve cookie-safe YouTube and Vimeo embeds.",
+  "website": "https://www.crystalthedeveloper.ca",
+  "appUrl": "https://smart-video-app.webflow.io",
+  "logo": "https://smart-video-app.webflow.io/meta/smart-video-icon.png",
+  "categories": ["media", "no-code"],
+  "oauth": {
+    "type": "authorization_code",
+    "clientId": "4d2fc9e23b2da52ec28918ca688fe86b11c344e3aa2783ee20f3fc0029a514ea",
+    "clientSecret": "${SMART_VIDEO_CLIENT_SECRET}",
+    "redirectUris": [
+      "https://smart-video-app.webflow.io/oauth/callback"
+    ],
+    "scopes": [
+      "sites:read",
+      "sites.custom_code:read",
+      "sites.custom_code:write"
+    ]
+  },
+  "hosting": {
+    "type": "webflow-cloud",
+    "baseUrl": "https://smart-video-app.webflow.io"
+  },
+  "lifecycle": {
+    "appInstalled": {
+      "endpoint": "https://smart-video-app.webflow.io/hooks/app-install",
+      "method": "POST"
+    },
+    "appUninstalled": {
+      "endpoint": "https://smart-video-app.webflow.io/hooks/app-uninstall",
+      "method": "POST"
+    },
+    "siteInstalled": {
+      "endpoint": "https://smart-video-app.webflow.io/hooks/site-install",
+      "method": "POST"
+    },
+    "siteUninstalled": {
+      "endpoint": "https://smart-video-app.webflow.io/hooks/site-uninstall",
+      "method": "POST"
+    }
+  }
+}

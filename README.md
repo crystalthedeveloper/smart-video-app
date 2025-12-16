@@ -1,106 +1,61 @@
 # Smart Video (CLTD)
 
-A cookie-safe, lightweight lazy-loading video embed for Webflow CMS and other sites.
+Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, lazy-loading YouTube + Vimeo script into every published site where the app is installed. Designers continue to build native Webflow CMS bindings and `.cltd-lazy-video` components exactly the way they are used to—no canvas injection, symbols, or custom attributes are touched.
 
-🎬 **Supports:** YouTube + Vimeo  
-⚡ **Features:**
-- Lazy-loads only when clicked (better performance & privacy)  
-- Auto thumbnails for YouTube (HQ default) and Vimeo (via API)  
-- Cookie-safe YouTube embeds (`youtube-nocookie.com`)  
-- Keeps your custom play button or overlay intact until playback  
-- Auto applies a responsive 16:9 aspect ratio — no extra CSS needed  
-- CLTD sandbox/namespace prevents double-initializing on the page  
+## What ships in this repo
+- `smart-video.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
+- `manifest.json` – declares OAuth + lifecycle hooks so Webflow knows how to talk to the app.
+- `cloud.config.json` – Webflow Cloud deployment recipe that uploads `smart-video.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
+- `functions/` – Cloud functions that respond to install/uninstall events and call the Custom Code API.
 
----
+## Hosting on Webflow Cloud
+1. Authenticate the [Webflow Cloud CLI](https://developers.webflow.com/data/cloud) for the `smart-video-app` project.
+2. Deploy the static asset + functions: `webflow cloud deploy -c ./cloud.config.json`.
+   - The deploy publishes `smart-video.js` to `https://smart-video-app.webflow.io/smart-video.js` with long-term caching.
+   - `/hooks/app-install`, `/hooks/app-uninstall`, `/hooks/site-install`, and `/hooks/site-uninstall` become HTTPS endpoints backed by the code in `functions/`.
+3. Verify the script URL loads in the browser and that each hook responds with JSON `{"ok": true}` when POSTed locally (Webflow will send signed requests in production).
 
-## 🚀 Getting Started
+## App manifest + OAuth
+1. Open `manifest.json` and confirm the metadata you want the Marketplace listing to show (name, icon, description, etc.).
+2. Replace the `clientSecret` placeholder with an environment value before uploading the manifest (never commit the raw secret).
+3. Upload/update the manifest inside the Webflow App Dashboard. The OAuth block uses the Data client credentials you already provisioned (`clientId`/`redirectUri` shown in the screenshot) and requests the scopes required for the Custom Code API.
 
-### 1️⃣ Add the Script (Before </body>)
-In your Webflow project, open **Page Settings → Custom Code → Before </body>** and paste:
+## Lifecycle automation
+- **`functions/site-install.js`** runs when a site owner installs the app. It extracts the site-scoped access token Webflow passes to lifecycle hooks, loads the site's current custom code, and appends `<script src="https://smart-video-app.webflow.io/smart-video.js" data-cltd-smart-video defer></script>` to the **Before </body>** section. That code only executes on published sites, so the Designer canvas stays untouched.
+- **`functions/site-uninstall.js`** removes the same snippet if the site disconnects the app.
+- The app-level hooks simply acknowledge install/uninstall events so Webflow can complete the process.
 
-```html
-<!-- Smart Video (CLTD) YouTube & Vimeo Lazy Loader -->
-<script src="https://cdn.jsdelivr.net/gh/crystalthedeveloper/smart-video-app@v1.0.2/smart-video.js" defer></script>
-```
+Because the script lives in the global custom code area, every existing and future page inherits the behavior automatically—even CMS generated pages—without asking designers to paste a per-page snippet.
 
-> Host the file yourself or pin to a specific tag once you’re ready for production.
+## Using `.cltd-lazy-video` inside Webflow
+Once the app is installed on a site, designers continue to build exactly as before:
 
----
-
-### 2️⃣ Set Up Your CMS Fields
-- Add a Plain Text field for the **video ID** (YouTube or Vimeo).  
-- Optional: add an Image field if you want a custom thumbnail.  
-
-💡 *Use only the ID, not the full URL.*  
-`https://www.youtube.com/watch?v=dQw4w9WgXcQ` → **dQw4w9WgXcQ**
-
----
-
-### 3️⃣ Drop the Embed Block Inside Your CMS Template
-Paste this into a Webflow **Embed** block:
+1. **Add CMS fields** (Plain Text for the video ID + optional Image if you want a custom poster frame).
+2. **Drop an Embed block** wherever the video should render and paste:
 
 ```html
 <div
   class="cltd-lazy-video"
   data-cltd-type="youtube"
-  data-cltd-id="{{wf {&quot;path&quot;:&quot;youtube-video-id&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}"
+  data-cltd-id="{{wf {&quot;path&quot;:&quot;youtube-video-id&quot;,&quot;type&quot;:&quot;PlainText&quot;} }}"
 >
-  <!-- Optional custom thumbnail (otherwise fetched automatically) -->
+  <!-- Optional custom thumbnail -->
   <!-- <img src="https://assets.example.com/my-thumbnail.jpg" alt="Video thumbnail" loading="lazy" /> -->
 
-  <!-- Optional custom overlay -->
+  <!-- Optional overlay / play button -->
   <button class="play-btn">▶</button>
 </div>
 ```
 
-No inline styling is required. The script applies the container styles, handles the click, and swaps in the iframe for you.
+3. Swap `data-cltd-type="vimeo"` (and bind to your Vimeo ID field) when needed.
+4. Style `.cltd-lazy-video` and any overlays directly in Webflow Designer—Smart Video only handles the lazy-loading logic.
 
----
+## How the script behaves
+- Waits for DOMContentLoaded, finds every `.cltd-lazy-video`, and guarantees a thumbnail exists.
+- Pulls thumbnails from YouTube (HQ default) or Vimeo (via their JSON API) unless you supplied your own `<img alt="Video thumbnail">`.
+- Replaces the node with a cookie-safe iframe (`youtube-nocookie.com` or `player.vimeo.com`) only when clicked.
+- Guards against double-initialization via `window.__cltdSmartVideoInitialized`.
 
-### 🎨 4️⃣ Style in Webflow
-- Style `.cltd-lazy-video` and any child elements (like `.play-btn`) directly in the Designer.  
-- Add your own SVG, gradient button, or overlay — anything inside the div stays visible until the video loads.  
-- For custom thumbnails, provide an `<img alt="Video thumbnail">`; otherwise the script injects one for you.  
-
----
-
-### 5️⃣ Vimeo Support
-Switch to Vimeo by changing the data attributes:
-
-```html
-data-cltd-type="vimeo"
-data-cltd-id="{{wf {&quot;path&quot;:&quot;vimeo-video-id&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}"
-```
-
-The script fetches the poster frame automatically. If the API call fails, your provided `<img>` fallback (if any) remains in place.
-
----
-
-### 💡 How It Works
-- Smart Video looks for `.cltd-lazy-video` elements once the DOM is ready.  
-- It auto-creates or updates a thumbnail image.  
-- When clicked, it replaces the container contents with a privacy-friendly YouTube or Vimeo iframe and starts playback.  
-- `window.__cltdSmartVideoInitialized` ensures the script only runs once per page.  
-
----
-
-### ✅ Example Output
-
-```html
-<div class="cltd-lazy-video" data-cltd-type="youtube" data-cltd-id="dQw4w9WgXcQ">
-  <button class="play-btn">▶</button>
-</div>
-```
-
----
-
-## 🧠 Notes
-- Works with static embeds or dynamic CMS content.  
-- Drop in multiple videos per page — each instance lazy-loads independently.  
-- No dependencies; pure vanilla JavaScript.  
-- Perfect for clients: all visual styling stays inside Webflow Designer.  
-
----
-
-👩🏽‍💻 Created by [Crystal The Developer](https://www.crystalthedeveloper.ca)  
-🌐 Use it freely in your Webflow projects!
+## Need to verify locally?
+- `smart-video.js` can still be referenced directly inside Webflow (or any HTML file) if you want to test outside of the Marketplace install flow.
+- Use the lifecycle hooks with a tool like `curl` or `httpie` to simulate Webflow's payload and confirm the Custom Code API calls succeed before submitting the app for review.
