@@ -3,9 +3,9 @@
 Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, lazy-loading YouTube + Vimeo script into every published site where the app is installed. Designers continue to build native Webflow CMS bindings and `.cltd-lazy-video` components exactly the way they are used to—no canvas injection, symbols, or custom attributes are touched.
 
 ## What ships in this repo
-- `smart-video-app.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
+- `public/smart-video-app/smart-video-app.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
 - `manifest.json` – declares OAuth + lifecycle hooks so Webflow knows how to talk to the app.
-- `cloud.config.json` – Webflow Cloud deployment recipe that uploads `smart-video-app.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
+- `cloud.config.json` – Webflow Cloud deployment recipe configured as a static project (`publicDir: "public"`) so the builder uploads `smart-video-app.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
 - `webflow.json` – minimal builder metadata (name + `publicDir`) required by Webflow Cloud. A copy also lives under `.webflow/webflow.json` for hosts that expect that path.
 - `package.json` – lightweight manifest so Webflow Cloud's build step always finds a Node project even though no npm build is required.
 - `functions/` – Cloud functions that respond to install/uninstall events and call the Custom Code API.
@@ -13,7 +13,7 @@ Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, la
 ## Hosting on Webflow Cloud
 1. Authenticate the [Webflow Cloud CLI](https://developers.webflow.com/data/cloud) for the `smart-video-app` project.
 2. Deploy the static asset + functions: `webflow cloud deploy -c ./cloud.config.json`.
-   - The deploy publishes `smart-video-app.js` to `https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js` with long-term caching.
+   - The deploy publishes `public/smart-video-app/smart-video-app.js` to `https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js` with long-term caching.
    - `/hooks/app-install`, `/hooks/app-uninstall`, `/hooks/site-install`, and `/hooks/site-uninstall` become HTTPS endpoints backed by the code in `functions/`.
 3. Verify the script URL loads in the browser and that each hook responds with JSON `{"ok": true}` when POSTed locally (Webflow will send signed requests in production).
 
