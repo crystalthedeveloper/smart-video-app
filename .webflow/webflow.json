@@ -1,0 +1,7 @@
+{
+  "name": "smart-video-app",
+  "cloud": {
+    "framework": "custom",
+    "config": "./cloud.config.json"
+  }
+}

@@ -6,7 +6,7 @@ Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, la
 - `smart-video.js` – vanilla JS that upgrades `.cltd-lazy-video` wrappers with thumbnails and privacy-friendly embeds on click.
 - `manifest.json` – declares OAuth + lifecycle hooks so Webflow knows how to talk to the app.
 - `cloud.config.json` – Webflow Cloud deployment recipe that uploads `smart-video.js` and the lifecycle hook endpoints to `https://smart-video-app.webflow.io`.
-- `webflow.json` – declares a `custom` Cloud framework so the builder runs `cloud.config.json`.
+- `webflow.json` – declares a `custom` Cloud framework so the builder runs `cloud.config.json`. A copy also lives under `.webflow/webflow.json` for hosts that expect that path.
 - `package.json` – lightweight manifest so Webflow Cloud's build step always finds a Node project even though no npm build is required.
 - `functions/` – Cloud functions that respond to install/uninstall events and call the Custom Code API.
 
