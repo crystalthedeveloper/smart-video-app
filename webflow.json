@@ -1,7 +1,5 @@
 {
-  "name": "Smart Video App",
-  "apiVersion": "2",
-  "cosmic": {
-    "framework": "astro"
-  }
+"cosmic": {
+"framework": "astro"
+}
 }
