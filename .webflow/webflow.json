@@ -1,5 +1,7 @@
 {
-  "name": "Smart Video App",
-  "apiVersion": "2",
-  "publicDir": "public"
+  "name": "smart-video-app",
+  "cloud": {
+    "framework": "custom",
+    "config": "./cloud.config.json"
+  }
 }
