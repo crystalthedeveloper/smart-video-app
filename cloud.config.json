@@ -1,24 +1,5 @@
 {
   "$schema": "https://cloud.webflow.com/schema/config/v1.json",
   "name": "smart-video-app",
-  "description": "Static Smart Video assets and lifecycle hooks deployed via Webflow Cloud.",
-  "publicDir": "public",
-  "functions": [
-    {
-      "path": "/hooks/app-install",
-      "entry": "./functions/app-install.js"
-    },
-    {
-      "path": "/hooks/app-uninstall",
-      "entry": "./functions/app-uninstall.js"
-    },
-    {
-      "path": "/hooks/site-install",
-      "entry": "./functions/site-install.js"
-    },
-    {
-      "path": "/hooks/site-uninstall",
-      "entry": "./functions/site-uninstall.js"
-    }
-  ]
+  "publicDir": "public"
 }
