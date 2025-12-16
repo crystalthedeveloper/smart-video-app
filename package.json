@@ -1,0 +1,9 @@
+{
+  "name": "smart-video-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart Video Webflow Custom Code app deployment artifacts.",
+  "scripts": {
+    "build": "echo \"Smart Video uses Webflow Cloud custom config\""
+  }
+}
