@@ -1,5 +1,5 @@
 {
-"cosmic": {
-"framework": "astro"
-}
+  "cosmic": {
+    "framework": "node"
+  }
 }
