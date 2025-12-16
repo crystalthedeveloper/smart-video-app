@@ -3,10 +3,7 @@
   "apiVersion": "2",
   "publicDir": "public",
   "cosmic": {
-    "framework": {
-      "name": "astro",
-      "version": "5.16.6"
-    },
+    "framework": "astro",
     "config": "./cloud.config.json"
   }
 }
