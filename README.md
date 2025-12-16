@@ -11,7 +11,10 @@ Smart Video is now a Webflow Marketplace app that auto-injects a cookie-safe, la
 - `functions/` – Cloud functions that respond to install/uninstall events and call the Custom Code API.
 
 ## Hosting on Webflow Cloud
-1. Authenticate the [Webflow Cloud CLI](https://developers.webflow.com/data/cloud) for the `smart-video-app` project.
+1. Authenticate the [Webflow Cloud CLI](https://developers.webflow.com/data/cloud) for the `smart-video-app` project. When you create or recreate the project, choose **Webflow App** (not Site) so Cloud uses `cloud.config.json` instead of scanning for Designer assets.
+   ```sh
+   webflow cloud project create smart-video-app --type app
+   ```
 2. Deploy the static asset + functions: `webflow cloud deploy -c ./cloud.config.json`.
    - The deploy publishes `public/smart-video-app/smart-video-app.js` to `https://smart-video-app.webflow.io/smart-video-app/smart-video-app.js` with long-term caching.
    - `/hooks/app-install`, `/hooks/app-uninstall`, `/hooks/site-install`, and `/hooks/site-uninstall` become HTTPS endpoints backed by the code in `functions/`.
