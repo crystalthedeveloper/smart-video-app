@@ -4,7 +4,7 @@
   "private": true,
   "description": "Smart Video Webflow Custom Code app deployment artifacts.",
   "scripts": {
-    "build": "node debug-cloud.mjs && astro build"
+    "build": "astro build"
   },
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.12",
