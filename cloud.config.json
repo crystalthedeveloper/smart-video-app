@@ -1,5 +1,5 @@
 {
   "$schema": "https://cloud.webflow.com/schema/config/v1.json",
   "name": "smart-video-app",
-  "publicDir": "public/smart-video-app"
+  "publicDir": "public"
 }
