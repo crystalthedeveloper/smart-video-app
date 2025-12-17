@@ -7,36 +7,37 @@
     <style>
       :root {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        color: #0f172a;
-        background-color: #f8fafc;
+        background: #020617;
+        color: #e2e8f0;
       }
 
       body {
         margin: 0;
         min-height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         padding: 2rem;
       }
 
       main {
         max-width: 32rem;
-        background: white;
+        width: 100%;
         border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+        padding: 2.25rem;
+        background: rgba(15, 23, 42, 0.9);
+        box-shadow: 0 35px 60px rgba(2, 6, 23, 0.45);
         text-align: center;
       }
 
       h1 {
         margin-top: 0;
-        font-size: 1.75rem;
+        font-size: 2rem;
       }
 
       p {
+        color: #cbd5f5;
         margin-bottom: 0;
-        color: #475569;
       }
     </style>
   </head>
@@ -44,9 +45,10 @@
     <main>
       <h1>Installing Smart Video App…</h1>
       <p>
-        This staging install page is ready to act as the OAuth redirect target. In upcoming iterations
-        it will read the <code>site_id</code> and <code>state</code> parameters, finish OAuth, and
-        inject the Smart Video script automatically via the Custom Code API.
+        This placeholder install page confirms that the OAuth redirect landed successfully. During
+        early testing it simply displays this status message, but the next iteration will read the
+        <code>site_id</code> and <code>state</code> query parameters, finish OAuth, and add the Smart
+        Video script via the Custom Code API automatically.
       </p>
     </main>
   </body>
