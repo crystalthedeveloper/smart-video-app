@@ -46,62 +46,23 @@
     <main>
       <h1>Installing Smart Video App…</h1>
       <p data-status>
-        Checking authorization status. You will be redirected to Webflow to grant access in a moment.
+        Waiting for Webflow to complete the install. Please launch Smart Video from the Webflow Apps
+        interface if you aren't redirected automatically.
       </p>
     </main>
     <script type="module">
-      const CLIENT_ID = "4d2fc9e23b2da52ec28918ca688fe86b11c344e3aa2783ee20f3fc0029a514ea";
-      const REDIRECT_URI = "https://smart-video-app.webflow.io/smart-video-app/install";
-      const OAUTH_SCOPES = ["sites:read", "sites.custom_code:read", "sites.custom_code:write"];
-      const AUTHORIZE_URL = "https://webflow.com/oauth/authorize";
       const STATUS = document.querySelector("[data-status]");
       const params = new URLSearchParams(window.location.search);
-      const hasRedirectParams =
-        params.has("code") || params.has("site_id") || params.has("siteId") || params.has("state");
+      const code = params.get("code");
+      const siteId = params.get("site_id") ?? params.get("siteId");
+      const state = params.get("state");
 
-      function generateState() {
-        if (crypto?.randomUUID) return crypto.randomUUID();
-        return Math.random().toString(36).slice(2);
-      }
-
-      function startInstall() {
-        const stateValue = generateState();
-        try {
-          sessionStorage.setItem("smartVideoInstallState", stateValue);
-        } catch (error) {
-          console.warn("Unable to persist OAuth state", error);
-        }
-
-        const authorizeUrl = new URL(AUTHORIZE_URL);
-        authorizeUrl.searchParams.set("response_type", "code");
-        authorizeUrl.searchParams.set("client_id", CLIENT_ID);
-        authorizeUrl.searchParams.set("redirect_uri", REDIRECT_URI);
-        authorizeUrl.searchParams.set("scope", OAUTH_SCOPES.join(" "));
-        authorizeUrl.searchParams.set("state", stateValue);
-
+      if (!code && !siteId && !state) {
         if (STATUS) {
-          STATUS.textContent = "Redirecting you to Webflow to authorize Smart Video…";
+          STATUS.textContent =
+            "This page should only load after approving the Smart Video App in Webflow. Please return to the Webflow Apps directory to start the install.";
         }
-
-        window.location.replace(authorizeUrl.toString());
-      }
-
-      function showStatus() {
-        const siteId = params.get("site_id") ?? params.get("siteId");
-        const code = params.get("code");
-        const state = params.get("state");
-        const storedState = (() => {
-          try {
-            return sessionStorage.getItem("smartVideoInstallState");
-          } catch (error) {
-            return null;
-          }
-        })();
-
-        if (storedState && state && state === storedState) {
-          sessionStorage.removeItem("smartVideoInstallState");
-        }
-
+      } else if (STATUS) {
         let message = "Received redirect from Webflow.";
         if (code) {
           const redacted = `${code.slice(0, 4)}…${code.slice(-4)}`;
@@ -110,21 +71,11 @@
         if (siteId) {
           message += ` Install requested for site ${siteId}.`;
         }
-        if (state && storedState && state !== storedState) {
-          message +=
-            " Warning: state mismatch detected. Please restart the install from the Webflow App detail page.";
+        if (state) {
+          message += ` State parameter ${state} recorded.`;
         }
         message += " You can close this tab and return to Webflow to finish setup.";
-
-        if (STATUS) {
-          STATUS.textContent = message;
-        }
-      }
-
-      if (!hasRedirectParams) {
-        startInstall();
-      } else {
-        showStatus();
+        STATUS.textContent = message;
       }
     </script>
   </body>
