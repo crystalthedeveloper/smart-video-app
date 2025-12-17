@@ -13,7 +13,7 @@
     "clientId": "4d2fc9e23b2da52ec28918ca688fe86b11c344e3aa2783ee20f3fc0029a514ea",
     "clientSecret": "${SMART_VIDEO_CLIENT_SECRET}",
     "redirectUris": [
-      "https://smart-video-app.webflow.io/oauth/callback"
+      "https://smart-video-app.webflow.io/smart-video-app/install"
     ],
     "scopes": [
       "sites:read",
