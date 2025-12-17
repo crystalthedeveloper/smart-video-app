@@ -1,3 +1,8 @@
+---
+const SCRIPT_PATH = "/smart-video-app/smart-video-app.js";
+const INSTALL_PATH = "/smart-video-app/install";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,8 +19,9 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 2rem;
       }
 
@@ -54,19 +60,17 @@
       <h1>Smart Video App</h1>
       <p>
         Smart Video speeds up Webflow sites by lazy-loading YouTube and Vimeo embeds only when visitors
-        scroll near them. It drops a lightweight placeholder, reduces initial page weight, and swaps in
-        the real player just in time—keeping media-rich pages fast and responsive.
+        scroll near them. It replaces heavy players with lightweight placeholders, keeping your media
+        pages fast and responsive without breaking playback.
       </p>
       <ul>
-        <li>Automatic detection of Webflow video components and custom embeds.</li>
-        <li>Instant placeholder rendering with custom thumbnails and play button styles.</li>
-        <li>
-          Works anywhere Webflow runs, including static publishing, Webflow Cloud, and custom domains.
-        </li>
+        <li>Auto-detects Webflow video components and custom iframe embeds.</li>
+        <li>Renders placeholders instantly with custom thumbnails and play buttons.</li>
+        <li>Works with Webflow Cloud, static publishing, and custom domains.</li>
       </ul>
       <p>
-        <a href="/smart-video-app/smart-video-app.js">View the hosted Smart Video script</a><br />
-        <a href="/smart-video-app/install">Go to the install page</a>
+        <a href={SCRIPT_PATH}>View the hosted Smart Video script</a><br />
+        <a href={INSTALL_PATH}>Go to the install page</a>
       </p>
     </main>
   </body>
