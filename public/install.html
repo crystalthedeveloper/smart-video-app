@@ -49,9 +49,13 @@
   <body>
     <main>
       <h1>Installing Smart Video App…</h1>
+      <p>
+        Smart Video uses Webflow's recommended OAuth install flow (Option A), so the authorization
+        code exchange and script injection happen automatically during the redirect.
+      </p>
       <p data-status>
-        Waiting for Webflow to complete the install. Please launch Smart Video from the Webflow Apps
-        interface if you aren't redirected automatically.
+        Waiting for Webflow to finish the OAuth callback and return you to the dashboard. You can
+        close this tab if you are redirected already.
       </p>
     </main>
     <script type="module">
@@ -64,10 +68,11 @@
       if (!code && !siteId && !state) {
         if (STATUS) {
           STATUS.textContent =
-            "This page should only load after approving the Smart Video App in Webflow. Please return to the Webflow Apps directory to start the install.";
+            "This screen is shown only after approving Smart Video inside Webflow. Please relaunch the Smart Video app from the Webflow Apps directory to start the install.";
         }
       } else if (STATUS) {
-        let message = "Received redirect from Webflow.";
+        let message =
+          "Received secure redirect from Webflow. Completing token exchange and injecting the Smart Video script via the Webflow Custom Code API.";
         if (code) {
           const redacted = `${code.slice(0, 4)}…${code.slice(-4)}`;
           message += ` Authorization code ${redacted} captured.`;
@@ -78,7 +83,8 @@
         if (state) {
           message += ` State parameter ${state} recorded.`;
         }
-        message += " You can close this tab and return to Webflow to finish setup.";
+        message +=
+          " Once complete you'll be redirected straight back to your Webflow dashboard with Smart Video active on all published pages.";
         STATUS.textContent = message;
       }
     </script>
